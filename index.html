@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>French G5 Vocab</title>
+  <style>
+    :root{
+      --bg:#f7f3ff;
+      --card:#ffffff;
+      --text:#252235;
+      --muted:#6f6884;
+      --accent:#7c4dff;
+      --accent2:#ff8a65;
+      --line:#e4dcff;
+      --shadow:0 10px 24px rgba(82,57,140,.12);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans JP",sans-serif;
+      background:
+        radial-gradient(900px 460px at 10% 0%, #ffe6dc 0%, transparent 55%),
+        radial-gradient(800px 520px at 90% 10%, #e4ddff 0%, transparent 58%),
+        var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+    header{
+      padding:28px 18px 18px;
+      text-align:center;
+    }
+    .title{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      padding:12px 18px;
+      border-radius:999px;
+      background:rgba(255,255,255,.75);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      font-weight:1000;
+      font-size:clamp(22px,5vw,38px);
+      letter-spacing:.02em;
+    }
+    .subtitle{
+      margin:14px auto 0;
+      max-width:760px;
+      color:var(--muted);
+      font-weight:700;
+      line-height:1.7;
+      font-size:15px;
+    }
+    .wrap{
+      width:min(1120px,100%);
+      margin:0 auto;
+      padding:14px 16px 34px;
+    }
+    .toolbar{
+      position:sticky;
+      top:0;
+      z-index:5;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px;
+      margin-bottom:14px;
+      border-radius:var(--radius);
+      background:rgba(255,255,255,.86);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+    }
+    .searchBox{
+      flex:1 1 240px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+    }
+    .searchBox input{
+      width:100%;
+      border:none;
+      outline:none;
+      font-size:16px;
+      color:var(--text);
+      background:transparent;
+      font-weight:700;
+    }
+    .small{
+      color:var(--muted);
+      font-weight:800;
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:12px;
+    }
+    a.card{
+      display:block;
+      text-decoration:none;
+      color:var(--text);
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow:var(--shadow);
+      transition:transform .08s ease, border .15s ease, box-shadow .15s ease;
+      min-height:112px;
+    }
+    a.card:hover{
+      transform:translateY(-2px);
+      border-color:#c8b8ff;
+      box-shadow:0 14px 30px rgba(82,57,140,.18);
+    }
+    .num{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--accent),#a78bfa);
+      color:white;
+      font-weight:1000;
+      box-shadow:0 8px 18px rgba(124,77,255,.28);
+    }
+    .name{
+      margin-top:12px;
+      font-size:17px;
+      font-weight:1000;
+    }
+    .file{
+      margin-top:6px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:800;
+      overflow-wrap:anywhere;
+      line-height:1.35;
+    }
+    footer{
+      text-align:center;
+      color:var(--muted);
+      font-weight:700;
+      padding:0 16px 28px;
+      font-size:13px;
+    }
+    .hidden{display:none!important}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title">🇫🇷 French G5 Vocab</div>
+    <p class="subtitle">
+      フランス語単語ゲーム一覧です。GitHub Pagesでは、この index.html と各ゲームHTMLを同じフォルダに入れると開けます。<br>
+      推測URL例：<strong>https://nocci-lab.github.io/French_G5_Vocab/French_G5_1_vocab1.html</strong>
+    </p>
+  </header>
+
+  <main class="wrap">
+    <div class="toolbar">
+      <label class="searchBox" aria-label="search">
+        🔎 <input id="search" type="search" placeholder="番号やファイル名で検索 例: 1 / vocab20" />
+      </label>
+      <div class="small"><span id="count">100</span> / 100 items</div>
+    </div>
+
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <footer>
+    Repository: Nocci-lab / French_G5_Vocab<br>
+    Links use relative paths, so they work both on GitHub Pages and inside the repository folder.
+  </footer>
+
+<script>
+(() => {
+  const TOTAL = 100;
+  const grid = document.getElementById('grid');
+  const search = document.getElementById('search');
+  const count = document.getElementById('count');
+
+  const items = Array.from({length: TOTAL}, (_, i) => {
+    const n = i + 1;
+    return {
+      n,
+      title: `Vocab ${n}`,
+      file: `French_G5_1_vocab${n}.html`
+    };
+  });
+
+  function render(){
+    const q = search.value.trim().toLowerCase();
+    grid.innerHTML = '';
+    let shown = 0;
+
+    items.forEach(item => {
+      const hay = `${item.n} ${item.title} ${item.file}`.toLowerCase();
+      if(q && !hay.includes(q)) return;
+      shown++;
+
+      const a = document.createElement('a');
+      a.className = 'card';
+      a.href = item.file;
+      a.innerHTML = `
+        <div class="num">${item.n}</div>
+        <div class="name">${item.title}</div>
+        <div class="file">${item.file}</div>
+      `;
+      grid.appendChild(a);
+    });
+
+    count.textContent = shown;
+  }
+
+  search.addEventListener('input', render);
+  render();
+})();
+</script>
+</body>
+</html>
